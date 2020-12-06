@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">InAppPurchase</string>
+    <string name="pay_now">Pay Now</string>
 </resources>
