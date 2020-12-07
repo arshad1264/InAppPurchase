@@ -20,8 +20,15 @@ public class MainActivity extends AppCompatActivity implements BillingProcessor.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        billingProcessor = new BillingProcessor(this, "YOUR LICENSE KEY FROM GOOGLE PLAY CONSOLE HERE", this);
+        billingProcessor = new BillingProcessor(this, "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAymMSvUXl3f5LrFUexh7ew9D8mWD8wVRIpO4FoEp0nI257gOthPziJ2prRy3aygNvznew9ZX53SLC3Ih2C6jCMn1Dtp/Qkq6RTlOEkhhzWD58K1K1WT/GByPHKszf1fZXcT3jRM8qouIiGGUDb8kU2b5hrXIpDNeXxHSiJW+46LEnpg42u4K0SEKEhSp9Xwd0uY7DNNUiDh5LT84siA/+SxE/52DwzPasrPv/qZl6xOWVeSib2L6ETjhpt1Y61EXHNXwsfAp/TtlxwHojoqKHXOVAiUo/fsCRazsHnC70bG16YQViWjLyIFGpDaG/gn37CZ0xe1frvgwxs+WknvtF9QIDAQAB", this);
         billingProcessor.initialize();
+
+        /*
+        android.test.purchased
+        android.test.canceled
+        android.test.refunded
+        android.test.item_unavailable
+        */
 
         Button buttonPayNow = findViewById(R.id.buttonPayNow);
         buttonPayNow.setOnClickListener(new View.OnClickListener() {
@@ -47,6 +54,7 @@ public class MainActivity extends AppCompatActivity implements BillingProcessor.
     @Override
     public void onBillingError(int errorCode, Throwable error) {
         Log.e(getClass().getSimpleName(), "onBillingError");
+        Log.e(getClass().getSimpleName(), "Error " + error.toString());
     }
 
     @Override
@@ -61,5 +69,12 @@ public class MainActivity extends AppCompatActivity implements BillingProcessor.
         }
     }
 
+    @Override
+    public void onDestroy() {
+        if (billingProcessor != null) {
+            billingProcessor.release();
+        }
+        super.onDestroy();
+    }
 
 }
